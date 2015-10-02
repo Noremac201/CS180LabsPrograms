@@ -1,0 +1,76 @@
+with Ada.Float_Text_IO;
+use Ada.Float_Text_IO;
+with Ada.Integer_Text_IO;
+use Ada.Integer_Text_IO;
+with Ada.Text_IO;
+use Ada.Text_IO;
+
+-----------------------------------------------
+-- Program 1
+-- Program to read and process mixed data types
+-- Input: Inches of Snow, Temperature, and Wind Speed.
+-- Output: Inches of Snow, Temperature, Wind Speed, and
+-- if its a snow day or not.
+-- Name: Cameron Moberg
+-- Due 9/10/2015
+-----------------------------------------------
+
+procedure moberg_c_program_1 is
+
+   Inches_Of_Snow: Integer;
+   Temp: Integer;
+   Wind_Speed: Integer;
+   Day_Cancelled: Boolean;
+
+begin -- Moberg_C_Program_1
+
+   --Prompting for and Storing Inches_Of_Snow
+   Ada.Text_IO.Put (Item => "Enter the total accumlation of snow in inches: ");
+   Ada.Integer_Text_IO.Get (Item => Inches_Of_Snow);
+
+   --Prompting for and Storing Temp
+   Ada.Text_IO.Put (Item => "Enter the current temperature in Fahrenheit: ");
+   Ada.Integer_Text_IO.Get (Item => Temp);
+
+   --Prompting for and Storing Wind_Speed
+   Ada.Text_IO.Put (Item => "Enter the current wind speed in miles per hour: ");
+   Ada.Integer_Text_IO.Get (Item => Wind_Speed);
+
+   --All the logic (if/then)
+   if Inches_Of_Snow > 10 then
+      Day_Cancelled := true;
+   elsif Inches_Of_Snow >= 4 and Temp < 0 then -- didn't include 10 because of first if statement.
+      Day_Cancelled := true;
+   elsif Inches_Of_Snow >= 4 and Temp < 20 and Wind_Speed > 25 then --Didn't include 0 for temp because of previous if statement.
+      Day_Cancelled := true;
+   else
+      Day_Cancelled := false;
+      Day_Cancelled := false;
+   end if;
+
+   --Output inches of snow
+   Put ("Inches of Snow: ");
+   Put (Inches_Of_Snow, Width => 1);
+   Put (" inches");
+   New_Line;
+
+   --Output Temperature in °F
+   Put ("Temperature: ");
+   Put (Temp, Width => 1);
+   Put (" °F");
+   New_Line;
+
+   --Output Wind Speed in mph
+   Put ("Wind Speed: ");
+   Put (Wind_Speed, Width => 1);
+   Put (" mph");
+   New_Line;
+
+   --Using Boolean to Determine if SNowday or Nah
+   if Day_Cancelled = true then
+      Put_Line("Snow Day: Yes");
+   else
+      Put_Line("Snow Day: No");
+   end if;
+
+end moberg_c_program_1;
