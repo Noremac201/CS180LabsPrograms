@@ -1,0 +1,101 @@
+with Ada.Text_IO;
+with Ada.Float_Text_IO;
+use Ada.Float_Text_IO;
+with Ada.Text_IO;
+use Ada.Text_IO;
+with Ada.Integer_Text_IO;
+-----------------------------------------------
+-- Program 2
+-- Program to read and process data from a text file.
+-- Input: A text file.
+-- Output: Avg high/low, min max temp, total precip.
+-- Name: Cameron Moberg
+-- Date: 9/18/2015
+-----------------------------------------------
+
+procedure Moberg_C_Program_2 is
+    Avg_High : Float;
+    Avg_Low : Float;
+    Total_Precip : Float;
+    Precip : Float;
+    Temp : Float;
+    Date_High : String(1..9);
+    Date_Low : String(1..9);
+    Highest_T : Float;
+    Lowest_T : Float;
+    High_Temp : Float;
+    Low_Temp : Float;
+    Date : String(1..9);
+    Input_File : File_Type;
+    Count : Natural;
+begin -- Moberg_C_Lab_3
+    Ada.Text_IO.Open (File => Input_File, Mode => Ada.Text_IO.In_File, Name => "weather.txt");
+    
+    --Initialize the counter.
+    Count := 0;
+    while not End_Of_File (Input_File) loop
+        Ada.Float_Text_IO.Get (File => Input_File, Item => Precip);
+        exit when Precip <= 0.0;
+        Count := Count + 1;
+        Total_Precip := Total_Precip + Precip;
+        
+        Ada.Float_Text_IO.Get (File => Input_File, Item => High_Temp);
+        Avg_High := Avg_High + High_Temp;
+        if Highest_T < High_Temp then
+            Highest_T := High_Temp;
+            Date_High := Date;
+        end if;
+
+        Ada.Float_Text_IO.Get (File => Input_File, Item => Low_Temp);
+        Avg_Low := Avg_Low + Low_Temp;
+        if Lowest_T < Low_Temp then
+            Lowest_T := Low_Temp;
+            Date_Low := Date;
+        end if;
+
+       Ada.Text_IO.Get (File => Input_File, Item => Date);
+        
+    end loop;
+
+    Avg_High := Avg_High / float(Count);
+    Avg_Low := Avg_Low / float(Count);
+
+    Ada.Text_IO.Put ("Average High Temperature: ");
+    Ada.Float_Text_IO.Put (Item => Avg_High,
+    fore => 1,
+    aft => 2,
+    exp => 0);
+    Ada.Text_IO.New_Line;
+    Ada.Text_IO.Put ("Average Low Temperature: ");
+    Ada.Float_Text_IO.Put (Item => Avg_Low,
+    fore => 1,
+    aft => 2,
+    exp => 0); 
+   
+    Ada.Text_IO.New_Line;
+    Ada.Text_IO.Put ("Max High Temperature: ");
+    Ada.Float_Text_IO.Put (Item => Highest_T,
+    fore => 1,
+    aft => 2,
+    exp => 0); 
+    Ada.Text_IO.Put (" on date:");
+    Ada.Text_IO.Put (Item => Date);
+    
+    Ada.Text_IO.New_Line;
+    Ada.Text_IO.Put ("Min Low Temperature: ");
+    Ada.Float_Text_IO.Put (Item => Lowest_T,
+    fore => 1,
+    aft => 2,
+    exp => 0);
+    Ada.Text_IO.Put (" on date: ");
+    Ada.Text_IO.Put (Item => Date);
+    
+    Ada.Text_IO.New_Line;
+    Ada.Text_IO.Put ("Total Precipitation is: ");
+    Ada.Float_Text_IO.Put (Item => Total_Precip,
+    fore => 1,
+    aft => 2,
+    exp => 0);
+    
+    Ada.Text_IO.Close (File => Input_File);
+end Moberg_C_Program_2;
