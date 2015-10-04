@@ -3,17 +3,17 @@ use Ada.Text_IO;
 with Ada.Integer_Text_IO;
 use Ada.Integer_Text_IO;
 procedure Moberg_C_Program_3 is
-  Date : String(1..10);
   Weekday : Integer;
-  Day_S : String(1..2);
-  Month_S : String(1..2);
-  Year_S : String(1..4);
   Day : Integer;
   Month : Integer;
   Year : Integer;
-  Max_Days : Integer;
 
     procedure Get_Date is
+      Day_S : String(1..2);
+      Month_S : String(1..2);
+      Year_S : String(1..4);
+      Max_Days : Integer;
+      Date : String(1..10);
 
     begin --Get_Date
       Ada.Text_IO.Put (Item => "What date is it? ");
@@ -21,6 +21,7 @@ procedure Moberg_C_Program_3 is
       Day_S := (Date(1..2));
       Month_S := (Date(4..5));
       Year_S := (Date(7..10));
+
       --Put_Line (Date (Date'First..Date'First));
       Day := Integer'Value(Day_S);
       Month := Integer'Value(Month_S);
@@ -46,6 +47,12 @@ procedure Moberg_C_Program_3 is
         Max_Days := 31;
       end if;
 
+      while Day > Max_Days or Month > 12 or Year > 2100 or Year < 1700 loop
+        Ada.Text_IO.Put (Item => "Please re-enter a valid date!");
+        New_Line;
+        Get_Date;
+      end loop;
+
     end Get_Date;
 
     function Day_Of_Week (Day, Month, Year: Integer)
@@ -70,16 +77,11 @@ procedure Moberg_C_Program_3 is
                     Saturday);
 
     begin -- Output_Day_Of_Week
-      Put(Weekday);
+      Put(Weekday'Image(Weekday));
     end Output_Day_Of_Week;
 
 begin -- Moberg_C_Program_3
   Get_Date;
-  while Day > Max_Days or Month > 12 or Year > 2100 or Year < 1700 loop
-    Ada.Text_IO.Put (Item => "Please re-enter a valid date!");
-    New_Line;
-    Get_Date;
-  end loop;
   Weekday := Day_Of_Week(Day, Month, Year);
   Output_Day_Of_Week;
 end Moberg_C_Program_3;
