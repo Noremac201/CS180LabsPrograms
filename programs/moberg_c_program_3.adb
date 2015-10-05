@@ -1,3 +1,11 @@
+------------------------------------
+--Program: Moberg_C_Program_3
+--Input - A date in dd/mm/yyyy format.
+--Output - What day of the week it is.
+--Assumptions - Entered in dd/mm/yyyy format.
+--Created by : Cameron Moberg
+--Date /04/10/2015/
+-------------------------------------
 with Ada.Text_IO;
 use Ada.Text_IO;
 with Ada.Integer_Text_IO;
@@ -8,15 +16,17 @@ procedure Moberg_C_Program_3 is
   Month : Integer;
   Year : Integer;
 
-    procedure Fix_Dates is
-    begin --Fix_Dates
+    procedure Fix_Date is
+
+    begin --Fix_Date
       if Month < 3 then
         Year := Year - 1;
         Month := Month + 10;
       else
         Month := Month - 2;
       end if;
-    end Fix_Dates;
+
+    end Fix_Date;
 
     procedure Get_Date is
       Day_S : String(1..2);
@@ -26,7 +36,7 @@ procedure Moberg_C_Program_3 is
       Date : String(1..10);
 
     begin --Get_Date
-      Ada.Text_IO.Put (Item => "What date is it? ");
+      Ada.Text_IO.Put (Item => "What date is it in dd/mm/yyyy format? ");
       Ada.Text_IO.Get (Item => Date);
       Day_S := (Date(1..2));
       Month_S := (Date(4..5));
@@ -53,8 +63,7 @@ procedure Moberg_C_Program_3 is
       end if;
 
       if Day > Max_Days or Month > 12 or Year > 2100 or Year < 1700
-            or Day < 1 or Month < 1 then
-
+      or Day < 1 or Month < 1 then
         Ada.Text_IO.Put (Item => "Please re-enter a valid date!");
         New_Line;
         Get_Date;
@@ -72,6 +81,7 @@ procedure Moberg_C_Program_3 is
     begin --Day_Of_Week
       Weekday := ((26*M-2)/10 + D + Y + Y/4 + C/4 - 2*C) mod 7;
       return Weekday;
+
     end Day_Of_Week;
 
     procedure Output_Day_Of_Week is
@@ -82,7 +92,7 @@ procedure Moberg_C_Program_3 is
                     Thursday,
                     Friday,
                     Saturday);
-     package Day_IO is new Ada.Text_IO.Enumeration_IO(Enum => Day);
+      package Day_IO is new Ada.Text_IO.Enumeration_IO(Enum => Day);
 
     begin -- Output_Day_Of_Week
       Day_IO.Put(Day'Val(Weekday));
@@ -90,7 +100,7 @@ procedure Moberg_C_Program_3 is
 
 begin -- Moberg_C_Program_3
   Get_Date;
-  Fix_Dates;
+  Fix_Date;
   Weekday := Day_Of_Week(Day, Month, Year);
   Output_Day_Of_Week;
 end Moberg_C_Program_3;
