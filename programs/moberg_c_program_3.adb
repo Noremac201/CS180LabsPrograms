@@ -38,6 +38,8 @@ procedure Moberg_C_Program_3 is
       if Month = 2 then
         if Year rem 4 = 0 and Year rem 400 = 0 then
           Max_Days := 29;
+        elsif Year rem 4 =0 and Year rem 100 /= 0 then
+          Max_Days := 29;
         else
           Max_Days := 28;
         end if;
@@ -75,9 +77,10 @@ procedure Moberg_C_Program_3 is
                     Thursday,
                     Friday,
                     Saturday);
+     package Day_IO is new Ada.Text_IO.Enumeration_IO(Enum => Day);
 
     begin -- Output_Day_Of_Week
-      Put(Weekday'Image(Weekday));
+      Day_IO.Put(Day'Val(Weekday));
     end Output_Day_Of_Week;
 
 begin -- Moberg_C_Program_3
