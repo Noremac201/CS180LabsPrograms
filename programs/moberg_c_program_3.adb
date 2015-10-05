@@ -8,6 +8,16 @@ procedure Moberg_C_Program_3 is
   Month : Integer;
   Year : Integer;
 
+    procedure Fix_Dates is
+    begin --Fix_Dates
+      if Month < 3 then
+        Year := Year - 1;
+        Month := Month + 10;
+      else
+        Month := Month - 2;
+      end if;
+    end Fix_Dates;
+
     procedure Get_Date is
       Day_S : String(1..2);
       Month_S : String(1..2);
@@ -26,19 +36,12 @@ procedure Moberg_C_Program_3 is
       Day := Integer'Value(Day_S);
       Month := Integer'Value(Month_S);
       Year := Integer'Value(Year_S);
-      --fix dates
-      if Month < 3 then
-        Year := Year - 1;
-        Month := Month + 10;
-      else
-        Month := Month - 2;
-      end if;
 
       --check leap year, and set month days
       if Month = 2 then
         if Year rem 4 = 0 and Year rem 400 = 0 then
           Max_Days := 29;
-        elsif Year rem 4 =0 and Year rem 100 /= 0 then
+        elsif Year rem 4 = 0 and Year rem 100 /= 0 then
           Max_Days := 29;
         else
           Max_Days := 28;
@@ -49,11 +52,13 @@ procedure Moberg_C_Program_3 is
         Max_Days := 31;
       end if;
 
-      while Day > Max_Days or Month > 12 or Year > 2100 or Year < 1700 loop
+      if Day > Max_Days or Month > 12 or Year > 2100 or Year < 1700
+            or Day < 1 or Month < 1 then
+
         Ada.Text_IO.Put (Item => "Please re-enter a valid date!");
         New_Line;
         Get_Date;
-      end loop;
+      end if;
 
     end Get_Date;
 
@@ -85,6 +90,7 @@ procedure Moberg_C_Program_3 is
 
 begin -- Moberg_C_Program_3
   Get_Date;
+  Fix_Dates;
   Weekday := Day_Of_Week(Day, Month, Year);
   Output_Day_Of_Week;
 end Moberg_C_Program_3;
