@@ -40,7 +40,7 @@ procedure Moberg_C_Program_3 is
         when others =>
           null;
       end case;
-
+      -- this is to check validity of date, recursivley calls it if fails.
       if Day > Max_Days or Month > 12 or Year > 2100 or Year < 1700
       or Day < 1 or Month < 1 then
         Ada.Text_IO.Put (Item => "Please re-enter a valid date!");
