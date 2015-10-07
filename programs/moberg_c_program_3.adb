@@ -12,12 +12,8 @@ with Ada.Integer_Text_IO;
 use Ada.Integer_Text_IO;
 
 procedure Moberg_C_Program_3 is
-  Weekday : Integer;
-  Day : Integer;
-  Month : Integer;
-  Year : Integer;
 
-    procedure Get_Date is
+    procedure Get_Date (Day, Month, Year : out Integer) is
       Max_Days : Integer;
       Slash : Character;
     begin --Get_Date
@@ -28,29 +24,32 @@ procedure Moberg_C_Program_3 is
       Ada.Text_IO.Get (Slash);
       Ada.Integer_Text_IO.Get (Item => Year);
       --check leap year, and set month days
-      if Month = 2 then
-        if Year rem 4 = 0 and Year rem 400 = 0 then
-          Max_Days := 29;
-        elsif Year rem 4 = 0 and Year rem 100 /= 0 then
-          Max_Days := 29;
-        else
-          Max_Days := 28;
-        end if;
-      elsif Month = 4 or Month = 6 or Month = 9 or Month = 11 then
-        Max_Days := 30;
-      else
-        Max_Days := 31;
-      end if;
+      case Month is
+        when 2 =>
+          if Year rem 4 = 0 and Year rem 400 = 0 then
+            Max_Days := 29;
+          elsif Year rem 4 = 0 and Year rem 100 /= 0 then
+            Max_Days := 29;
+          else
+            Max_Days := 28;
+          end if;
+        when 4 | 6 | 9 | 11 =>
+          Max_Days := 30;
+        when 1 | 3 | 5 | 7 | 8 | 10 | 12 =>
+          Max_Days := 31;
+        when others =>
+          null;
+      end case;
 
       if Day > Max_Days or Month > 12 or Year > 2100 or Year < 1700
       or Day < 1 or Month < 1 then
         Ada.Text_IO.Put (Item => "Please re-enter a valid date!");
         New_Line;
-        Get_Date;
+        Get_Date(Day,Month,Year);
       end if;
     end Get_Date;
 
-    procedure Fix_Date is
+    procedure Fix_Date (Month, Year: in out Integer) is
     begin --Fix_Date
       if Month < 3 then
         Year := Year - 1;
@@ -60,8 +59,7 @@ procedure Moberg_C_Program_3 is
       end if;
     end Fix_Date;
 
-    function Day_Of_Week (Day, Month, Year: Integer)
-                           return Integer is
+    procedure Day_Of_Week (Day, Month, Year: in Integer; Weekday : out Integer) is
       D : Integer := Day;
       M : Integer := Month;
       C : Integer := Year / 100;
@@ -69,11 +67,9 @@ procedure Moberg_C_Program_3 is
 
     begin --Day_Of_Week
       Weekday := ((26*M-2)/10 + D + Y + Y/4 + C/4 - 2*C) mod 7;
-      return Weekday;
-
     end Day_Of_Week;
 
-    procedure Output_Day_Of_Week is
+    procedure Output_Day_Of_Week(Weekday: in Integer) is
       type Day is (Sunday,
                     Monday,
                     Tuesday,
@@ -86,10 +82,13 @@ procedure Moberg_C_Program_3 is
     begin -- Output_Day_Of_Week
       Day_IO.Put(Day'Val(Weekday));
     end Output_Day_Of_Week;
-
+  Weekday : Integer;
+  Day : Integer;
+  Month : Integer;
+  Year : Integer;
 begin -- Moberg_C_Program_3
-  Get_Date;
-  Fix_Date;
-  Weekday := Day_Of_Week(Day, Month, Year);
-  Output_Day_Of_Week;
+  Get_Date(Day,Month,Year);
+  Fix_Date(Month,Year);
+  Day_Of_Week(Day, Month, Year,Weekday);
+  Output_Day_Of_Week(Weekday);
 end Moberg_C_Program_3;
