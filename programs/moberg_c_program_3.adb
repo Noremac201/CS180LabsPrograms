@@ -18,7 +18,6 @@ procedure Moberg_C_Program_3 is
   Year : Integer;
 
     procedure Fix_Date is
-
     begin --Fix_Date
       if Month < 3 then
         Year := Year - 1;
@@ -49,19 +48,29 @@ procedure Moberg_C_Program_3 is
       Year := Integer'Value(Year_S);
 
       --check leap year, and set month days
-      if Month = 2 then
-        if Year rem 4 = 0 and Year rem 400 = 0 then
-          Max_Days := 29;
-        elsif Year rem 4 = 0 and Year rem 100 /= 0 then
-          Max_Days := 29;
-        else
-          Max_Days := 28;
-        end if;
-      elsif Month = 4 or Month = 6 or Month = 9 or Month = 11 then
-        Max_Days := 30;
-      else
-        Max_Days := 31;
-      end if;
+      case Month is
+        when 4 | 6 | 9 | 11 =>
+          Max_Days := 30;
+        when 1 | 3  | 5 | 7 | 8 | 10 | 12 =>
+          Max_Days := 31;
+        when 2 =>
+          if Year rem 4 = 0 and Year rem 400 = 0 then
+            Max_Days := 29;
+          elsif Year rem 4 = 0 and Year rem 100 /= 0 then
+            Max_Days := 29;
+          else
+             Max_Days := 28;
+          end if;
+        when others =>
+             null;
+      end case;
+      --if Month = 2 then
+      --end if;
+    --  elsif Month = 4 or Month = 6 or Month = 9 or Month = 11 then
+    --    Max_Days := 30;
+  --  else
+  --      Max_Days := 31;
+--    end if;
 
       if Day > Max_Days or Month > 12 or Year > 2100 or Year < 1700
       or Day < 1 or Month < 1 then
