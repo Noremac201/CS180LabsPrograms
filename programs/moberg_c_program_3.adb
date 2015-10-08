@@ -13,6 +13,7 @@ use Ada.Integer_Text_IO;
 
 procedure Moberg_C_Program_3 is
 
+    --Gets date/checks validity.
     procedure Get_Date (Day, Month, Year : out Integer) is
       Max_Days : Integer;
       Slash : Character;
@@ -23,6 +24,7 @@ procedure Moberg_C_Program_3 is
       Ada.Integer_Text_IO.Get (Item => Month);
       Ada.Text_IO.Get (Slash);
       Ada.Integer_Text_IO.Get (Item => Year);
+
       --check leap year, and set month days
       case Month is
         when 2 =>
@@ -49,6 +51,7 @@ procedure Moberg_C_Program_3 is
       end if;
     end Get_Date;
 
+    --accounts for the inconsistencies in zellers.
     procedure Fix_Date (Month, Year: in out Integer) is
     begin --Fix_Date
       if Month < 3 then
@@ -82,6 +85,8 @@ procedure Moberg_C_Program_3 is
     begin -- Output_Day_Of_Week
       Day_IO.Put(Day'Val(Weekday));
     end Output_Day_Of_Week;
+
+  --main variables
   Weekday : Integer;
   Day : Integer;
   Month : Integer;
